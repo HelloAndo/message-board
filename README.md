@@ -1,27 +1,33 @@
-# vue-guestbook
+# Vue留言板
 
-> the practice project of vuejs
+> 一个基于Vue的留言板练习作业
 
-## Build Setup
+## 安装 & 启动
 
 ``` bash
-# install dependencies
+# 安装依赖
 npm install
 
-# serve with hot reload at localhost:8080
+# 启动应用 localhost:8080
 npm run dev
-
-# build for production with minification
-npm run build
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
 ```
+## 项目结构
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+``` bash
+.
+├── config.js                   # 项目配置文件
+├── build/                      # webpack 配置文件
+│   └── ...
+├── src/
+│   ├── main.js                 # app 入口文件
+│   ├── App.vue                 # app 主组件
+│   ├── components/             # ui 组件
+│   │   └── ...
+│   └── assets/                 # 模块静态资源，会被 webpack 打包
+│       └── ...
+├── static/                     # 纯静态资源，打包是直接被复制
+├── .babelrc                    # babel 配置
+├── .eslintrc.js                # eslint 配置
+├── index.html                  # index.html 模版
+└── package.json                # 命令和依赖列表
+```
