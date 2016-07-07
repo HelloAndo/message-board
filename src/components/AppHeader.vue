@@ -11,7 +11,7 @@
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">{{logo}}</a>
+            <a class="navbar-brand" v-link="'/home'">{{logo}}</a>
         </div>
         <form class="navbar-form navbar-right" role="search">
             <div class="form-group">

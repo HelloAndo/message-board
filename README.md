@@ -5,6 +5,12 @@
 ## 安装 & 启动
 
 ``` bash
+# 下载项目
+git clone http://10.32.5.29:8080/Neil/vue-guestbook.git
+
+# 进入项目
+cd vue-guestbook
+
 # 安装依赖
 npm install
 
