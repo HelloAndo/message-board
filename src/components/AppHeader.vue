@@ -18,7 +18,6 @@
         <div class="navbar-form navbar-right" v-if="isLogin">
             <span class="welcome">欢迎 {{user}} 回来</span>
             <button class="btn btn-default btn-warning"  @click="testLogin">testLogin</button>
-            <button class="btn btn-default btn-warning"  @click="testStore">testStore</button>   
             <button class="btn btn-default btn-danger"  @click="logout">退出</button>
         </div>
         <form class="navbar-form navbar-right" role="search" v-else >
@@ -30,8 +29,7 @@
             </div>
             <button type="submit" class="btn btn-primary" v-else @click="login(user, pass)">登陆</button>
             <button class="btn btn-default" data-toggle="modal" data-target="#modal-signup" v-else>注册</button>
-            <button class="btn btn-default btn-warning"  @click="testLogin">testLogin</button>  
-            <button class="btn btn-default btn-warning"  @click="testStore">testStore</button>                        
+            <button class="btn btn-default btn-warning"  @click="testLogin">testLogin</button>                      
         </form>
     </div>
 </div>
@@ -93,7 +91,8 @@ ready () {
         if( response.data.data.isLogin ){
             this.setUserData('login', true);
             this.user = this.getUserData( 'user' );
-            this.isLogin = true ;            
+            this.isLogin = true ; 
+            this.$dispatch('refreshLoginState', this.isLogin, this.user);           
         }
     });
 },
@@ -159,6 +158,7 @@ ready () {
                     this.setUserData( 'login', true );
                     this.setUserData( 'user', user );
                     this.isLogin = true ;
+                    this.$dispatch('refreshLoginState', this.isLogin, this.user);
                 }else{ 
                     alert("用户名或密码错误！") 
                 }
@@ -172,7 +172,10 @@ ready () {
             this.$http.get('logout').then((response) => {
                 if( response.data.success ){
                     this.setUserData('login', false);
-                    this.isLogin = false ;              
+                    this.setUserData('user', '');
+                    this.isLogin = false ;  
+                    this.user = '' ;          
+                    this.$dispatch('refreshLoginState', this.isLogin, this.user);        
                 }else{
                     return ;
                 }

@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import App from './App'
 import Home from './components/Home'
+import Content from './components/Content'
+import Modify from './components/Modify'
 
 Vue.use(VueResource).use(VueRouter)
 
@@ -17,8 +19,17 @@ const router = new VueRouter()
 router.map({
   '/home': {
     component: Home,
+    subRoutes: {
+    	'/content': {
+    		component: Content,
+    	},
+    	'/modify': {
+    		component: Modify,
+    	},
+    },
+  },
 
-  }
+
 })
 
 router.redirect({

@@ -4,8 +4,7 @@
 
 <div>
     <app-header></app-header>
-            <button class="btn btn-default btn-warning"  @click="login" style="margin-top: 50px;">isLogin?</button>  
-    <router-view></router-view>
+    <router-view :is-login="loginFlag" :usr="user"></router-view>
 </div>
 
 </template>
@@ -17,7 +16,8 @@ import AppHeader from './components/AppHeader'
 export default {
 	data () {
 		return {
-
+			loginFlag: false,
+			user: '',
 		}
 	},
 
@@ -25,6 +25,13 @@ export default {
 		login: function(){
 			console.log(AppHeader.data());
 		}
+	},
+
+	events: {
+		refreshLoginState: function(loginFlag, user){
+			this.loginFlag = loginFlag ;
+			this.user = user;
+		},
 	},
 
     components: {
