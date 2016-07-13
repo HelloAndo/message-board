@@ -1,13 +1,13 @@
 # 周欢庭的项目说明
 
 # 文件说明
-AppHeader.vue 			头部组件
-AddTopic.vue 			主页添加话题区
-Home.vue 				主页主内容区
-Content.vue 			文章详情页面
-Modify.vue 				修改文章页面
-Author.vue 				单用户话题列表页面
-common.js 				复用函数文件
+	#AppHeader.vue 			头部组件
+	#AddTopic.vue 			主页添加话题区
+	#Home.vue 				主页主内容区
+	#Content.vue 			文章详情页面
+	#Modify.vue 			修改文章页面
+	#Author.vue 			单用户话题列表页面
+	#common.js 				复用函数文件
 
 # 路由及页面结构和props数据
 	#首页				'/home'：AppHeader + AddTopic
