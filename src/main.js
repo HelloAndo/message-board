@@ -3,6 +3,9 @@ import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import App from './App'
 import Home from './components/Home'
+import Content from './components/Content'
+import Modify from './components/Modify'
+import Author from './components/Author'
 
 Vue.use(VueResource).use(VueRouter)
 
@@ -18,7 +21,24 @@ router.map({
   '/home': {
     component: Home,
 
-  }
+    subRoutes: {
+
+    	'/content/:id': {
+    		component: Content,
+    	},
+
+    	'/modify/:id': {
+    		component: Modify,
+    	},
+
+      '/author/:user': {
+        component: Author,
+      },
+
+    },
+
+  },
+
 })
 
 router.redirect({
@@ -26,3 +46,7 @@ router.redirect({
 })
 
 router.start(App, '#app')
+
+Vue.filter('bjtime', function(date){
+  return new Date(date).toLocaleString("zh-CN", {hour12: false});
+});
