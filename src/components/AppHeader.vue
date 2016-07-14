@@ -6,6 +6,8 @@
 
 .navbar-form .welcome{ display: inline-block; font-size: 18px; color: #fff; vertical-align: middle; padding-right: 12px; }
 
+.navbar-header > .btn{margin-top: 10px;}
+
 </style>
 
 <template>
@@ -14,6 +16,8 @@
     <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand" v-link="'/home'">{{logo}}</a>
+            <button class="btn btn-default btn-primary btn-sm" v-link="'/home'" >项目入口</button>     
+            <button class="btn btn-default btn-primary btn-sm" v-link="'/introduce'" >介绍入口</button> 
         </div>
         <div class="navbar-form navbar-right" v-if="isLogin">
             <span class="welcome">欢迎 {{user}} 回来</span>
@@ -90,10 +94,11 @@ ready () {
     this.$http.get('testlogin').then((response) => {
 
         if( response.data.data.isLogin ){
-            this.setUserData('login', true);
-            this.setUserData('user', response.data.data.user);
-            this.isLogin = true ; 
-            this.user = this.getUserData( 'user' );
+            this.saveLoginInfo('true', response.data.data.user);
+            // this.setUserData('login', true);
+            // this.setUserData('user', response.data.data.user);
+            // this.isLogin = true ; 
+            // this.user = this.getUserData( 'user' );
             this.$dispatch('refreshLoginState', this.isLogin, this.user);           
         }
     });
@@ -114,13 +119,6 @@ ready () {
         }
     },
 
-    computed: {
-        // isLogin: function(){
-        //     console.log(this.getUserData( 'login' ));
-        //     return 
-        // },
-    },
-
     methods: {
         register: function(){
             this.rewritePass = this.rewriteUser = this.regSuccess = false;
@@ -136,10 +134,7 @@ ready () {
                         // 注册成功提示
                         this.regSuccess = true;
                         this.saveLoginInfo( true, regUser ) ;
-                        // this.user = regUser ;
-                        // this.isLogin = true ;
-                        // this.setUserData( 'login', true );
-                        // this.setUserData( 'user', this.user );
+                        this.$dispatch('refreshLoginState', this.isLogin, this.user);
                     }else{
                         // 用户名已被注册，提示
                         this.rewriteUser = true;
@@ -158,10 +153,6 @@ ready () {
             this.$http.post('login', {user: user, password: pass}).then((response) => {
                 if( response.data.success ){
                     this.saveLoginInfo( true, user ) ;
-                    // this.user = user;
-                    // this.isLogin = true ;
-                    // this.setUserData( 'login', true );
-                    // this.setUserData( 'user', this.user );
                     this.$dispatch('refreshLoginState', this.isLogin, this.user);
                 }else{ 
                     alert("用户名或密码错误！") 
@@ -175,11 +166,7 @@ ready () {
         logout: function(){
             this.$http.get('logout').then((response) => {
                 if( response.data.success ){
-                    this.saveLoginInfo( false, '' );
-                    // this.setUserData('login', false);
-                    // this.setUserData('user', '');
-                    // this.isLogin = false ;  
-                    // this.user = '' ;          
+                    this.saveLoginInfo( false, '' );        
                     this.$dispatch('refreshLoginState', this.isLogin, this.user);        
                 }else{
                     return ;
@@ -189,8 +176,10 @@ ready () {
         },
 
         saveLoginInfo (isLogin, user) {
+            // 本地更新
             this.setUserData('login', isLogin);
             this.setUserData('user', user);
+            // 程序状态更新
             this.isLogin = isLogin ;  
             this.user = user ;   
         },

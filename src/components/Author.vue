@@ -42,6 +42,7 @@ export default {
 	<div class="container">
         <div class="panel panel-default">
             <div class="panel-heading">
+                <span class="btn btn-sm btn-primary pull-right" v-link="'/home'">返回首页</span>
                 <h4>{{topics[0].author}}的话题列表</h4></div>
             <table class="table table-hover">
                 <thead>

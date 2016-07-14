@@ -26,6 +26,7 @@ export default {
 	<div class="container">
         <div class="panel panel-default">
             <div class="panel-heading">
+                <span class="btn btn-sm btn-primary pull-right" v-link="'/home'">返回首页</span>
                 <h4>{{topic.title}}</h4></div>
             <div class="panel-body">
                 <div class="panel">

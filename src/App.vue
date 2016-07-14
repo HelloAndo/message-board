@@ -36,12 +36,6 @@ export default {
 		}
 	},
 
-	methods: {
-		login: function(){
-			console.log(AppHeader.data());
-		}
-	},
-
 	events: {
 		refreshLoginState: function(isLogin, user){
 			this.isLogin = isLogin ;

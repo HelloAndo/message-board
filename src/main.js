@@ -6,6 +6,7 @@ import Home from './components/Home'
 import Content from './components/Content'
 import Modify from './components/Modify'
 import Author from './components/Author'
+import Introduce from './components/Introduce'
 
 Vue.use(VueResource).use(VueRouter)
 
@@ -37,6 +38,10 @@ router.map({
 
     },
 
+  },
+
+  '/introduce': {
+    component: Introduce,
   },
 
 })

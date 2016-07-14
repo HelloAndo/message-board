@@ -61,7 +61,7 @@
             <li v-for="n in page" :class="{'active': n == nowPage}" @click="getToPage(n)"><a href="javascript:;">{{n}}</a></li>
             <li :class="{'disabled': nowPage==totalPagesNum}" @click="addPage"><a href="#">&raquo;</a></li>
         </ul>
-        <div class="panel panel-default" v-show="isLogin" transition="addTopicBox">
+        <div class="panel panel-default" v-if="isLogin" transition="addTopicBox">
             <div class="panel-heading">
                 <h4>添加话题</h4>
             </div>
@@ -136,13 +136,6 @@ export default {
     },
 
     methods: {
-        // getTopics: function(){
-        //     this.$http.get('gettopics').then((response) => {
-        //         this.topticList = response.data.data.list ;
-        //     }, (response) => {
-        //         alert( "获取话题列表出错！" ) ;
-        //     });
-        // },
 
         getTopics (offset, count) {
             this.$http.post('gettopics', {offset: offset, count: count}).then((response) => {
@@ -163,12 +156,10 @@ export default {
         addPage () {
             if(this.nowPage == this.totalPagesNum){return;}
             this.nowPage++ ;
-            if( this.nowPage == this.page[this.page.length-1] + 1 ){
-                let newPage = [];
-                this.page.forEach(function(value){
-                    newPage.push(value+1);
-                });
-                this.page = newPage ;                
+            if( this.nowPage > this.page[this.page.length-1] ){
+                this.page = this.page.map((value) => {
+                    return ++value ;
+                });        
             }
             this.getTopics( (this.nowPage-1)*10, 10);
 
@@ -177,18 +168,16 @@ export default {
         reducePage () {
             if(this.nowPage == 1){return;}
             this.nowPage-- ;
-            if( this.nowPage == this.page[0] - 1 ){
-                let newPage = [];
-                this.page.forEach(function(value){
-                    newPage.push(value-1);
+            if( this.nowPage < this.page[0] ){
+                this.page = this.page.map((value) => {
+                    return --value ;
                 });
-                this.page = newPage ;
             }
             this.getTopics( (this.nowPage-1)*10, 10);
             
         },
 
-        addTopic: function(){
+        addTopic () {
             this.$http.post('addtopic', {title: this.newTopic.title, content: this.newTopic.ctx}).then((response) => {
                 // 获取最新话题列表
                 this.topticList = this.getTopics(0, 10) ;
@@ -204,7 +193,7 @@ export default {
             });
         },
 
-        delTopic: function(id){
+        delTopic (id) {
             var that = this ;
             this.$http.post('deletetopic', {_id: id}).then((response) => {
                 // this.topticList = this.getTopics(0, 10) ;
